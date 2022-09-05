@@ -4,24 +4,12 @@
 
     $usuarioDao = new ControllerUsuario();
     
-    if(!empty($_POST['nome']) && !empty($_POST['sexo']) && !empty($_POST['idade']) && !empty($_POST['peso']) && !empty($_POST['altura'])){
-        $usuario = new Usuario($_POST['nome'], $_POST['sexo'],$_POST['idade'],$_POST['peso'],$_POST['altura']);
+    if(!empty($_POST['nome']) && !empty($_POST['cpf']) && !empty($_POST['idade'])){
+        $usuario = new Usuario($_POST['nome'], $_POST['cpf'],$_POST['idade']);
         
         //var_dump($usuario); //Obter informações da variável
         $usuario ->validarDados();
-
-        if (empty($usuario->erro)) {
-            if ($usuario->getMsg() == "Abaixo do peso") {
-                $class = "alert-danger";
-            } elseif ($usuario->getMsg() == "Peso Normal") {
-                $class = "alert-success";
-            } elseif ($usuario->getMsg() == "Sobrepeso") {
-                $class = "alert-warning";
-            } else {
-                $class = "alert-danger";
-            }
-            $usuarioDao->createUsuario($usuario);
-        }
+        $usuarioDao->createUsuario($usuario);
     }
 
     
@@ -40,49 +28,43 @@
 </head>
 
 <body class="bg-light p-5">
-    <div class="container border border-2 rounded-4 p-4 bg-white mb-5" style="max-width: 600px;">
+    <div class="container border border-2 rounded-4 p-4 bg-white mb-5" style="max-width: 400px;">
         <form method="POST">
-            <h1 class="mb-4 text-center">Calculadora IMC</h1>
+            <h1 class="mb-4 text-center">Votação</h1>
             <div class="row">
                 <div class="mb-3">
-                    <label for="nome" class="form-label fw-bold">Informe seu nome</label>
+                    <label for="nome" class="form-label fw-bold">Nome do Eleitor:</label>
                     <input type="text" name="nome" class="form-control form-control-lg bg-light" value="" required>
                 </div>
 
-                <div class="mb-3 col-sm-6">
-                    <label for="sexo" class="form-label fw-bold">Informe seu sexo</label>
-                    <select name="sexo" id="sexo" class="form-select form-select-lg bg-light">
-                        <option value="">------------</option>
-                        <option value="M">Masculino</option>
-                        <option value="F">Feminino</option>
-                    </select>
+                <div class="mb-3">
+                    <label for="cpf" class="form-label fw-bold">CPF:</label>
+                    <input type="text" name="cpf" class="form-control form-control-lg bg-light" value="" required>
                 </div>
 
-                <div class="mb-3 col-sm-6">
-                    <label for="idade" class="form-label fw-bold">Informe sua idade </label>
+                <div class="mb-3">
+                    <label for="idade" class="form-label fw-bold">Idade:</label>
                     <input type="text" name="idade" class="form-control form-control-lg bg-light" value="" required>
                 </div>
 
-                <div class="mb-3 col-sm-6">
-                    <label for="peso" class="form-label fw-bold">Informe seu peso (kg) </label>
-                    <input type="text" name="peso" class="form-control form-control-lg bg-light" value="" required>
+                <div>
+                    <label for="bob">
+                    <img src="presidente_1.PNG" class="img-thumbnail" alt="bob" style="width: 50%; margin-bottom: 15px;">
+                    <input class="ml-1" type="radio" name="voto" id="bob" value="option1">Bob, a esponja
+                    </label>
                 </div>
 
-                <div class="mb-3 col-sm-6">
-                    <label for="altura" class="form-label fw-bold">Informe sua altura (metro e cm)</label>
-                    <input type="text" name="altura" class="form-control form-control-lg bg-light" value="" required>
+                <div>
+                    <label for="estrela">
+                    <img src="presidente_2.PNG" class="img-thumbnail" alt="patrick" style="width: 50%; margin-bottom: 15px;">
+                    <input type="radio" name="voto" id="estrela" value="option2">Patrick, a estrela
+                    </label>
                 </div>
             </div>
             <div class="d-grid mb-4">
-                <input type="submit" value="Calcular" class="btn btn-primary btn-lg">
+                <input type="submit" value="Calcular" class="btn btn-outline-primary btn-lg">
             </div>
 
-            <?php if(isset($usuario) && empty($usuario->erro)){ ?>
-            <div class="alert text-center fs-4 <?php echo $class ?>" role="alert"> 
-                <span class="d-block fw-bold">IMC: <?php echo round($usuario->getImc(),2); ?>  </span>
-                <span><?php echo $usuario->getMsg(); ?></span>
-            </div>
-            <?php } ?>
         </form>
     </div>
 
@@ -93,11 +75,8 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Nome</th>
-                        <th>Sexo</th>
+                        <th>Cpf</th>
                         <th>Idade</th>
-                        <th>Peso</th>
-                        <th>Altura</th>
-                        <th>IMC</th>
                         <th>Data de Registro</th>                
                     </tr>
                 </thead>
@@ -105,11 +84,8 @@
                     <?php foreach($usuarioDao->readUsuario() as $usuarios){ ?>
                     <tr>
                         <td><?php echo $usuarios["nome"]; ?></td>
-                        <td><?php echo $usuarios["sexo"]; ?></td>
+                        <td><?php echo $usuarios["cpf"]; ?></td>
                         <td><?php echo $usuarios["idade"]; ?></td>
-                        <td><?php echo $usuarios["peso"]; ?></td>
-                        <td><?php echo $usuarios["altura"]; ?></td>
-                        <td><?php echo $usuarios["imc"]; ?></td>
                         <td><?php echo date('d/m/Y', strtotime($usuarios["data_registro"])); ?></td>
                     <?php } ?>
                     </tr>

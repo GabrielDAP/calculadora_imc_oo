@@ -4,11 +4,8 @@ class Usuario{
     
     private $id;
     private $nome;
-    private $sexo;
+    private $cpf;
     private $idade;
-    private $peso;
-    private $altura;
-    private $imc;
     private $msg;
     private $erro = [];
 
@@ -28,12 +25,12 @@ class Usuario{
 		return $this-> nome = $nome;
 	}
 
-	public function getSexo() {
-		return $this-> sexo;
+	public function getCpf() {
+		return $this-> cpf;
 	}
 
-	public function setSexo($sexo) {
-		return $this-> sexo = $sexo;
+	public function setCpf($cpf) {
+		return $this-> cpf = $cpf;
 	}
 
 	public function getIdade() {
@@ -44,38 +41,14 @@ class Usuario{
 		return $this-> idade = $idade;
 	}
 
-	public function getPeso() {
-		return $this-> peso;
-	}
-
-	public function setPeso($peso) {
-		return $this-> peso = $peso;
-	}
-
-	public function getAltura() {
-		return $this-> altura;
-	}
-
-	public function setAltura($altura) {
-		return $this-> altura = $altura;
-	}
-
-	public function getImc() {
-		return $this-> imc;
-	}
-
 	public function getMsg() {
 		return $this-> msg;
 	}
 
-
-
-    public function __construct($nome, $sexo, $idade, $peso, $altura){
+    public function __construct($nome, $cpf, $idade){
         $this-> nome = $nome;
-        $this-> sexo = $sexo;
+        $this-> cpf = $cpf;
         $this-> idade = $idade;
-        $this-> peso = $peso;
-        $this-> altura = $altura;
     }
 
     public function validarDados(){
@@ -86,7 +59,7 @@ class Usuario{
             $this->erro["erro_idade"] = "Idade Inválida!";
         }
         
-        $this->peso = str_replace(",",".",$this->peso);
+        /*$this->peso = str_replace(",",".",$this->peso);
         if(!is_numeric($this->peso)){
             $this->erro["erro_peso"] = "O peso deve ser número!";
         }
@@ -94,9 +67,9 @@ class Usuario{
         $this->altura = str_replace(",",".",$this->altura);
         if(!is_numeric($this->altura)){
             $this->erro["erro_altura"] = "O altura deve ser número!";
-        }
+        }*/
 
-        if(empty($this->erro)){
+        /*if(empty($this->erro)){
             $this->imc = $this->peso/ pow($this->altura,2);
 
             if ($this->imc < 18.5) {
@@ -112,7 +85,7 @@ class Usuario{
             } else {
                 $this->msg = "Obesidade grau III (Mórbida)";
             }
-        }
+        }*/
 
         
 

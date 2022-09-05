@@ -1,7 +1,7 @@
 <?php
 
 define("SERVERNAME","localhost");
-define("DATABASE","calculadora_imc");
+define("DATABASE","votacao");
 define("USERNAME","root");
 define("PASSAWORD","");
 
